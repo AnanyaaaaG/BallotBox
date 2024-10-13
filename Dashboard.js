@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     // Simulated user data (replace with actual data fetching)
     const userData = {
         name: 'John Doe',
@@ -23,5 +23,27 @@ document.addEventListener('DOMContentLoaded', function() {
         li.textContent = `${election.name} - ${election.date}`;
         electionList.appendChild(li);
     });
+
+    // Call fetchElections when the page loads
+    await fetchElections();
 });
 
+async function fetchElections() {
+    try {
+        const response = await fetch('/api/elections');
+        const elections = await response.json();
+        displayElections(elections);
+    } catch (error) {
+        console.error('Error fetching elections:', error);
+    }
+}
+
+function displayElections(elections) {
+    const electionList = document.getElementById('election-list');
+    electionList.innerHTML = '';
+    elections.forEach(election => {
+        const li = document.createElement('li');
+        li.textContent = `${election.name} - ${election.date}`;
+        electionList.appendChild(li);
+    });
+}

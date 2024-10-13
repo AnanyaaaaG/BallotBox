@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BallotBox</title>
-    <link rel="stylesheet" href="LoginPage.css">
+   <link rel="stylesheet" href="LoginPage.css">
 </head>
 <body>
     <div class="container">
         <div class="form-box">
             <img src="img/BallotBoxLogo.jpeg" alt="Ballot Box Logo" class="logo">
             <h2>Login</h2>
-            <form>
+            <form id="loginForm">
                 <div class="input-group">
                     <label for="username">Username</label>
                     <input type="text" id="username" name="username" required>
@@ -20,10 +20,36 @@
                     <label for="password">Password</label>
                     <input type="password" id="password" name="password" required>
                 </div>
-                <button type="submit" onclick="window.location.href='Dashboard.html'" >Login</button>
+                <button type="submit">Login</button>
                 <p>Don't have an account? <a href="SignUp.html">Sign Up</a></p>
             </form>
         </div>
     </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username, password }),
+                });
+
+                if (response.ok) {
+                    window.location.href = 'Dashboard.html';
+                } else {
+                    alert('Invalid credentials');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    </script>
 </body>
 </html>

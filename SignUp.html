@@ -12,7 +12,7 @@
         <div class="form-box">
             <img src="img/BallotBoxLogo.jpeg" alt="Ballot Box Logo" class="logo">
             <h2>Sign Up</h2>
-            <form action="#" method="post">
+            <form id="signupForm">
                 <div class="input-group">
                     <label for="username">Username</label>
                     <input type="text" id="username" name="username" required>
@@ -31,8 +31,44 @@
                 </div>
                 <button type="submit">Sign Up</button>
             </form>
-            <p>Already have an account? <a href="Loginpage.html">Login here</a></p>
+            <p>Already have an account? <a href="LoginPage.html">Login here</a></p>
         </div>
     </div>
+
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            if (password !== confirmPassword) {
+                alert('Passwords do not match');
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:3000/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username, email, password }),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const result = await response.json();
+                alert(result.message);
+                window.location.href = 'LoginPage.html';
+            } catch (error) {
+                console.error('Fetch error:', error);
+                alert('An error occurred during signup. Please check the console for details.');
+            }
+        });
+    </script>
 </body>
 </html>
