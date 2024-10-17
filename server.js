@@ -79,6 +79,8 @@ app.post('/signup', async (req, res) => {
     // Check if user already exists
     const existingUser = await db.collection('users').findOne({ $or: [{ username }, { email }] });
 
+    console.log('User found:', user);  // Add this line to check if user data is being fetched
+
     if (existingUser) {
       return res.status(400).json({ message: 'Username or email already exists' });
     }
