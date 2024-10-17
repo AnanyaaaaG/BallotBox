@@ -62,6 +62,7 @@ app.use(cors({
 
 app.use(express.json());
 
+// Signup route
 app.post('/signup', async (req, res) => {
   console.log('Received signup request:', req.body);
   try {
@@ -88,6 +89,37 @@ app.post('/signup', async (req, res) => {
   } catch (error) {
     console.error('Signup error:', error);
     res.status(500).json({ message: 'An error occurred during signup', error: error.message });
+  }
+});
+
+// Login route
+app.post('/login', async (req, res) => {
+  console.log('Received login request:', req.body);
+  try {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+      return res.status(400).json({ message: 'All fields are required' });
+    }
+
+    // Find the user by username
+    const user = await db.collection('users').findOne({ username });
+
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid username or password' });
+    }
+
+    // Compare password
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Invalid username or password' });
+    }
+
+    res.status(200).json({ message: 'Login successful' });
+  } catch (error) {
+    console.error('Login error:', error);
+    res.status(500).json({ message: 'An error occurred during login', error: error.message });
   }
 });
 

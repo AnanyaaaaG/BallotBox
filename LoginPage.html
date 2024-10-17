@@ -32,7 +32,7 @@
             e.preventDefault();
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
-
+    
             try {
                 const response = await fetch('/login', {
                     method: 'POST',
@@ -41,16 +41,20 @@
                     },
                     body: JSON.stringify({ username, password }),
                 });
-
+    
+                const result = await response.json();
+    
                 if (response.ok) {
-                    window.location.href = 'Dashboard.html';
+                    window.location.href = 'Dashboard.html'; // Redirect to dashboard
                 } else {
-                    alert('Invalid credentials');
+                    alert(result.message || 'Invalid credentials');
                 }
             } catch (error) {
                 console.error('Error:', error);
+                alert('An error occurred. Please try again later.');
             }
         });
     </script>
+    
 </body>
 </html>
