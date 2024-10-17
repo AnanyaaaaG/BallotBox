@@ -6,7 +6,7 @@ const cors = require('cors');
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
-const port = 3000; // or whatever port you're using
+const port = 3000;
 
 // MongoDB connection string
 const uri = process.env.MONGODB_URI;
@@ -38,6 +38,11 @@ connectToDatabase();
 // Serve static files from the current directory
 app.use(express.static('.'));
 
+// Root route to avoid "Cannot GET /" error
+app.get('/', (req, res) => {
+  res.send('Welcome to BallotBox API');
+});
+
 // Example API endpoint to fetch elections
 app.get('/api/elections', async (req, res) => {
   try {
@@ -52,7 +57,7 @@ app.get('/api/elections', async (req, res) => {
 
 // Enable CORS for all routes
 app.use(cors({
-  origin: 'http://10.17.0.169:5500' // Allow requests from this origin
+  origin: 'http://10.17.0.169:5500'
 }));
 
 app.use(express.json());
@@ -60,8 +65,6 @@ app.use(express.json());
 app.post('/signup', async (req, res) => {
   console.log('Received signup request:', req.body);
   try {
-    await client.connect();
-    const db = client.db('BallotBox'); // Changed to match the existing database name
     const { username, email, password } = req.body;
 
     if (!username || !email || !password) {
@@ -85,8 +88,6 @@ app.post('/signup', async (req, res) => {
   } catch (error) {
     console.error('Signup error:', error);
     res.status(500).json({ message: 'An error occurred during signup', error: error.message });
-  } finally {
-    await client.close();
   }
 });
 
