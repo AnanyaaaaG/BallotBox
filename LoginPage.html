@@ -30,14 +30,18 @@
     <script>
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
+    
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
+    
+            // Check if form inputs are being correctly collected
+            console.log('Login attempt:', { username, password });
     
             try {
                 const response = await fetch('/login', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'application/json', // This is crucial for JSON data
                     },
                     body: JSON.stringify({ username, password }),
                 });
@@ -55,6 +59,7 @@
             }
         });
     </script>
+    
     
 </body>
 </html>

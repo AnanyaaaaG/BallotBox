@@ -5,8 +5,18 @@ require('dotenv').config();
 const cors = require('cors');
 
 const app = express();
-app.use(express.urlencoded({ extended: true }));
 const port = 3000;
+
+// Middleware for parsing JSON bodies
+app.use(express.json());
+
+// Middleware for parsing URL-encoded bodies
+app.use(express.urlencoded({ extended: true }));
+
+// Enable CORS for all routes (you can restrict it later)
+app.use(cors({
+  origin: 'http://10.17.0.169:5500', // Adjust this to your frontend address
+}));
 
 // MongoDB connection string
 const uri = process.env.MONGODB_URI;
@@ -21,6 +31,7 @@ const client = new MongoClient(uri);
 
 let db;
 
+// Function to connect to MongoDB
 async function connectToDatabase() {
   try {
     await client.connect();
@@ -38,7 +49,7 @@ connectToDatabase();
 // Serve static files from the current directory
 app.use(express.static('.'));
 
-// Root route to avoid "Cannot GET /" error
+// Root route
 app.get('/', (req, res) => {
   res.send('Welcome to BallotBox API');
 });
@@ -54,13 +65,6 @@ app.get('/api/elections', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
-
-// Enable CORS for all routes
-app.use(cors({
-  origin: 'http://10.17.0.169:5500'
-}));
-
-app.use(express.json());
 
 // Signup route
 app.post('/signup', async (req, res) => {
@@ -109,10 +113,10 @@ app.post('/login', async (req, res) => {
       return res.status(400).json({ message: 'Invalid username or password' });
     }
 
-    // Compare password
-    const isMatch = await bcrypt.compare(password, user.password);
+    // Compare the provided password with the hashed password in the database
+    const passwordMatch = await bcrypt.compare(password, user.password);
 
-    if (!isMatch) {
+    if (!passwordMatch) {
       return res.status(400).json({ message: 'Invalid username or password' });
     }
 
@@ -129,6 +133,7 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: 'Something went wrong!' });
 });
 
+// Start the server
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
