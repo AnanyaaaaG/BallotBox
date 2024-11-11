@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Election Details</title>
+    <link rel="stylesheet" href="Dashboard.css">
+    <style>
+        body {
+            text-align: center;
+        }
+        header {
+            text-align: left;
+            height: 60px;
+        }
+        header h1 {
+            font-size: 1.5em;
+            margin-left: 10px;
+        }
+        .logo {
+            height: 40px;
+        }
+        main {
+            padding-top: 70px;
+        }
+        footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: #f1f1f1;
+            color: black;
+            text-align: center;
+            padding: 10px 0;
+        }
+        button {
+            background-color: #007BFF; /* Blue background */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 20px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+        }
+        button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="img/BallotBoxLogo.jpeg" alt="Ballot Box Logo" class="logo">
+        <h1>Student Election Details</h1>
+    </header>
+
+    <main>
+        <h2>Want to Vote?</h2>
+        <p>Please confirm if you are currently in college:</p>
+        <button id="inCollegeYes">Yes, I am in college</button>
+        <button id="inCollegeNo">No, I am not in college</button>
+
+        <h2>Do you want to vote?</h2>
+        <p>Please confirm your interest in voting:</p>
+        <button id="wantToVoteYes">Yes, I want to vote</button>
+        <button id="wantToVoteNo">No, I do not want to vote</button>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 BallotBox. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById('inCollegeYes').addEventListener('click', function() {
+            alert('Thank you for confirming!');
+            // Redirect to voting page or further actions
+        });
+
+        document.getElementById('inCollegeNo').addEventListener('click', function() {
+            alert('Noted by Admin.');
+            // Redirect or take further actions
+        });
+
+        document.getElementById('wantToVoteYes').addEventListener('click', function() {
+            alert('Great! You will be notified about the voting process.');
+            // Redirect to voting page or further actions
+        });
+
+        document.getElementById('wantToVoteNo').addEventListener('click', function() {
+            alert('Thank you for your response.');
+            // Redirect or take further actions
+        });
+    </script>
+</body>
+</html>

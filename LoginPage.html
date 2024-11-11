@@ -11,19 +11,44 @@
         <div class="form-box">
             <img src="img/BallotBoxLogo.jpeg" alt="Ballot Box Logo" class="logo">
             <h2>Login</h2>
-            <form>
+            <form id="loginForm">
                 <div class="input-group">
-                    <label for="username">USERNAME</label>
+                    <label for="username">Username</label>
                     <input type="text" id="username" name="username" required>
                 </div>
                 <div class="input-group">
                     <label for="password">Password</label>
                     <input type="password" id="password" name="password" required>
                 </div>
-                <button type="submit" onclick="window.location.href='Dashboard.html'" >Login</button>
+                <button type="submit">Login</button>
                 <p>Don't have an account? <a href="SignUp.html">Sign Up</a></p>
             </form>
         </div>
     </div>
+
+    <script>
+        // Hardcoded user credentials
+        const hardcodedUser = {
+            username: "student",
+            password: "stu123"
+        };
+
+        // Event listener for the login form submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent the default form submission
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Check if the entered credentials match the hardcoded user
+            if (username === hardcodedUser.username && password === hardcodedUser.password) {
+                // Redirect to the dashboard if credentials are correct
+                window.location.href = 'Dashboard.html';
+            } else {
+                // Show an alert if the credentials are incorrect
+                alert('Invalid username or password');
+            }
+        });
+    </script>
 </body>
 </html>
