@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BallotBox Admin Login</title>
+    <link rel="stylesheet" href="LoginPage.css">
+</head>
+<body>
+    <div class="container">
+        <div class="form-box">
+            <img src="img/BallotBoxLogo.jpeg" alt="Ballot Box Logo" class="logo">
+            <h2>Admin Login</h2>
+            <form id="adminLoginForm">
+                <div class="input-group">
+                    <label for="adminUsername">Admin Username</label>
+                    <input type="text" id="adminUsername" name="adminUsername" required>
+                </div>
+                <div class="input-group">
+                    <label for="adminPassword">Admin Password</label>
+                    <input type="password" id="adminPassword" name="adminPassword" required>
+                </div>
+                <button type="submit">Login as Admin</button>
+            </form>
+            <p>Not an admin? <a href="LoginPage.html">Login</a></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const adminUsername = document.getElementById('adminUsername').value;
+            const adminPassword = document.getElementById('adminPassword').value;
+
+            // For demonstration, let's assume the admin credentials are hardcoded
+            const validAdminUsername = "admin"; // Replace with your admin username
+            const validAdminPassword = "admin123"; // Replace with your admin password
+
+            if (adminUsername === validAdminUsername && adminPassword === validAdminPassword) {
+                alert('Admin login successful!');
+                window.location.href = 'AdminDashboard.html'; // Redirect to the admin dashboard
+            } else {
+                alert('Invalid admin username or password');
+            }
+        });
+    </script>
+</body>
+</html>
